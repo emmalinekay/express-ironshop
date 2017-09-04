@@ -153,4 +153,20 @@ router.post('/products/:prodId', (req, res, next) => {
 }); // close POST /products/:prodId
 
 
+router.post('/products/:prodId/delete', (req, res, next) => {
+    ProductModel.findByIdAndRemove(
+      req.params.prodId,
+
+      (err, productInfo) => {
+          if (err) {
+              next(err);
+              return;
+          }
+
+          res.redirect('/products');
+      }
+    );
+}); // close POST /products/:prodId/delete
+
+
 module.exports = router;

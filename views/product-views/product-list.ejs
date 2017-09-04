@@ -16,7 +16,12 @@
       <a href="/products/<%= oneProduct._id %>/edit">
         Edit
       </a>
-      <br>
+
+      <!-- use a form with a button for delete instead of an anchor tag
+           so that it can be a (semantically correct) POST route -->
+      <form method="post" action="/products/<%= oneProduct._id %>/delete">
+        <button> Delete </button>
+      </form>
     </li>
   <% }) %>
 </ul>
