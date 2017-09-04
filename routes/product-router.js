@@ -73,6 +73,7 @@ router.get('/products/:prodId', (req, res, next) => {
 
     // "findById()" will get one result from the DB (or null)
     ProductModel.findById(
+      // get the ID from the URL placeholder ":prodId"
       req.params.prodId,
 
       (err, productFromDb) => {
@@ -87,8 +88,69 @@ router.get('/products/:prodId', (req, res, next) => {
           res.render('product-views/product-details.ejs');
       }
     );
-}); // close GET "/product-details"
+}); // close GET /products/:prodId
 
+
+// STEP #1: show the edit form
+router.get('/products/:prodId/edit', (req, res, next) => {
+    // Because we want to prepopulate the form fields,
+    // we need to get the product's information from the database.
+    ProductModel.findById(
+        // get the ID from the URL placeholder ":prodId"
+        req.params.prodId,
+
+        (err, productFromDb) => {
+            if (err) {
+                // skip straight to the error middleware if there's a DB error
+                next(err);
+                return;
+            }
+
+            res.locals.productInfo = productFromDb;
+
+            res.render('product-views/edit-product.ejs');
+        }
+    );
+}); // close GET /products/:prodId/edit
+
+// STEP #2: receive the form submission and save
+router.post('/products/:prodId', (req, res, next) => {
+    // PROTIP: Use "findById" and "save" for updates to save with validations
+
+    // find the product to update it
+    ProductModel.findById(
+      req.params.prodId,
+
+      (err, productFromDb) => {
+          if (err) {
+              next(err);
+              return;
+          }
+
+          // update the product's fields to the ones from the form
+          productFromDb.name        = req.body.productName;
+          productFromDb.price       = req.body.productPrice;
+          productFromDb.imageUrl    = req.body.productImageUrl;
+          productFromDb.description = req.body.productDescription;
+          //              |                           |
+          //          SCHEMA fields                INPUT names
+
+          // save the updates
+          productFromDb.save((err) => {
+              if (err) {
+                  next(err);
+                  return;
+              }
+
+              // STEP #3: redirect
+              res.redirect('/products');
+
+              // to redirect to the details page:
+              // res.redirect('/products' + productFromDb._id);
+          });
+      }
+    ); // close ProductModel.findById( ...
+}); // close POST /products/:prodId
 
 
 module.exports = router;

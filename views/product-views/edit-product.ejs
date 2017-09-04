@@ -1,0 +1,32 @@
+<h2> Edit Product </h2>
+
+<!--
+  router.post('/products/:prodId', (req, res, next) => { ... -->
+
+<form method="post" action="/products/<%= productInfo._id %>">
+
+  <!-- to prepopulate input tags, put the text in a "value" attribute -->
+  <label for="product-name-input"> Product Name </label>
+  <input  id="product-name-input" name="productName" type="text"
+      value="<%= productInfo.name %>">
+  <br>
+
+  <label for="price-input"> Price </label>
+  <input  id="price-input" name="productPrice" type="number" step="0.10"
+      value="<%= productInfo.price %>">
+  <br>
+
+  <label for="image-input"> Image URL </label>
+  <input  id="image-input" name="productImageUrl" type="text"
+      value="<%= productInfo.imageUrl %>">
+  <br>
+
+  <label   for="description-input"> Description </label>
+  <textarea id="description-input" name="productDescription"
+      ><%= productInfo.description %></textarea>
+  <br>
+  <!-- to prepopulate textarea tags, put the text between the open and close -->
+
+  <button> Save This Product </button>
+
+</form>
