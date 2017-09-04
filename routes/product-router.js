@@ -62,5 +62,33 @@ router.post('/products', (req, res, next) => {
 }); // close POST /products
 
 
+router.get('/products/:prodId', (req, res, next) => {
+    //      req.params.prodId
+    // <a href="/products/9999">
+    // NEW URL
+
+    //                 req.query.prodId
+    // <a href="/product-details?prodId=9999">
+    // OLD URL
+
+    // "findById()" will get one result from the DB (or null)
+    ProductModel.findById(
+      req.params.prodId,
+
+      (err, productFromDb) => {
+          if (err) {
+              // skip straight to the error middleware if there's a DB error
+              next(err);
+              return;
+          }
+
+          res.locals.productInfo = productFromDb;
+
+          res.render('product-views/product-details.ejs');
+      }
+    );
+}); // close GET "/product-details"
+
+
 
 module.exports = router;

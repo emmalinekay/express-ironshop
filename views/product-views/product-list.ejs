@@ -6,6 +6,11 @@
     <li>
       <h3> <%= oneProduct.name %> </h3>
       <p> $<%= oneProduct.price %> </p>
+
+      <!-- Link using a query string -->
+      <a href="/products/<%= oneProduct._id %>">
+        Details
+      </a>
     </li>
   <% }) %>
 </ul>
