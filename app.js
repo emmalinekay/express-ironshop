@@ -35,11 +35,15 @@ app.use(layouts);
 const index = require('./routes/index');
 app.use('/', index);
 
+const productVariations = require('./routes/product-variations.js');
+app.use(productVariations);
+
 const myProdRouter = require('./routes/product-router.js');
 app.use(myProdRouter);
 
 const myReviewRouter = require('./routes/review-router.js');
 app.use(myReviewRouter);
+
 
 // ROUTES END --------------------------------------------------------
 
