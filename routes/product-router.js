@@ -45,8 +45,18 @@ router.post('/products', (req, res, next) => {
 
     // save that product to the database
     theProduct.save((err) => {
+        // if there's a validation error...
+        if (err && theProduct.errors) {
+            // send the error messages to the view
+            res.locals.errorMessages = theProduct.errors;
+
+            // display the form again with the errors
+            res.render('product-views/product-form.ejs');
+            return;
+        }
+
         // if there's a database error...
-        if (err) {
+        if (err && !theProduct.errors) {
             // skip to the error handler middleware
             next(err);
             // return to avoid showing the view

@@ -4,6 +4,18 @@
 
 <img src="<%= productInfo.imageUrl %>">
 
+
+<!-- check to see if we have error messages to display -->
+<% if (typeof errorMessages !== 'undefined') { %>
+    <!-- if we have error messages, display them -->
+    <ul class="error">
+        <% for (let fieldName in errorMessages) { %>
+            <li> <%= errorMessages[fieldName].message %> </li>
+        <% } %>
+    </ul>
+<% } %>
+
+
 <!--
   router.post('/products/:prodId/reviews', ... -->
 

@@ -51,7 +51,19 @@ router.post('/products/:prodId/reviews', (req, res, next) => {
 
           // save the product updates to the database
           productFromDb.save((err) => {
-              if (err) {
+              if (err && productFromDb.errors) {
+                  // send the error messages to the view
+                  res.locals.errorMessages = productFromDb.errors;
+
+                  // display the form again with the errors
+                  res.locals.productInfo = productFromDb;
+
+                  res.render('review-views/review-form.ejs');
+                  return;
+              }
+
+              // if there's a database error...
+              if (err && !productFromDb.errors) {
                   next(err);
                   return;
               }
