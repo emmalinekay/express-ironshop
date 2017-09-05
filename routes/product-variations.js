@@ -46,4 +46,31 @@ router.get('/products/luxury', (req, res, next) => {
 });
 
 
+router.get('/products/search', (req, res, next) => {
+    res.render('variations-views/product-search.ejs');
+});
+
+router.get('/products/search-results', (req, res, next) => {
+    const mySearchRegex = new RegExp(req.query.searchTerm, 'i');
+                                                 //         |
+    ProductModel.find(                           // ignore case
+      { name: mySearchRegex },
+      // |
+      // field from the schema to search
+      // (check the model)
+
+      (err, searchResults) => {
+          if (err) {
+              next(err);
+              return;
+          }
+
+          res.locals.lastSearch = req.query.searchTerm;
+          res.locals.listOfResults = searchResults;
+          res.render('variations-views/results.ejs');
+      }
+    );
+}); // close GET /products/search-results
+
+
 module.exports = router;
