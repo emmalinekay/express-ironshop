@@ -1,0 +1,24 @@
+<h2> Review a Product </h2>
+
+<h3> <%= productInfo.name %> </h3>
+
+<img src="<%= productInfo.imageUrl %>">
+
+<!--
+  router.post('/products/:prodId/reviews', ... -->
+
+<form method="post" action="/products/<%= productInfo._id %>/reviews">
+  <label for="author-input"> Email Address </label>
+  <input  id="author-input" name="reviewAuthor" type="email">
+  <br>
+
+  <label for="star-input"> Star Rating </label>
+  <input  id="star-input" name="reviewStars" type="number">
+  <br>
+
+  <label   for="content-input"> Comments </label>
+  <textarea id="content-input" name="reviewContent"></textarea>
+  <br>
+
+  <button> Post This Review </button>
+</form>

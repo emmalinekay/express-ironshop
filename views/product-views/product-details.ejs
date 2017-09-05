@@ -10,3 +10,22 @@
 </p>
 
 <p> <%= productInfo.description %> </p>
+
+<a href="/products/<%= productInfo._id %>/reviews/new">
+  Review This Product
+</a>
+
+
+<h3> Reviews </h3>
+
+<ul>
+  <% productInfo.reviews.forEach((oneReview) => { %>
+    <li>
+      <span> <%= '⭐️'.repeat(oneReview.stars) %> </span>
+
+      <p> <%= oneReview.content %> </p>
+
+      <b> <%= oneReview.author %> </b>
+    </li>
+  <% }) %>
+</ul>
